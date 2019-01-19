@@ -9,6 +9,7 @@ class Game
         @four = data[:four]
         @five = data[:five]
         @player_response = nil
+        @correct_response = data
     end 
 
     def start
@@ -24,15 +25,7 @@ class Game
     end 
 
     def player_found_answer
-        @player_response == {
-            one: @one,
-            two: @two,
-            three: @three,
-            four: @four,
-            five: @five,
-        }
+        @player_response == @correct_response
     end 
-
-
 
 end 

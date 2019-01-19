@@ -3,8 +3,8 @@ require_relative('../lib/game.rb')
 describe Game do
 
     before(:all) do 
-        @game = Game.new({one: "B", two: "A", three: "C", four: "E", five: "F"})
         @correct_answer = {one: "B", two: "A", three: "C", four: "E", five: "F"}
+        @game = Game.new(@correct_answer)
         @player_response1 = {
             one: "A",
             two: "B",
