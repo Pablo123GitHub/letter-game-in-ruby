@@ -4,6 +4,22 @@ describe Game do
 
     before(:all) do 
         @game = Game.new({one: "B", two: "A", three: "C", four: "E", five: "F"})
+        @correct_answer = {one: "B", two: "A", three: "C", four: "E", five: "F"}
+        @player_response1 = {
+            one: "A",
+            two: "B",
+            three: "C",
+            four: "D",
+            five: "E"
+        } 
+
+        @player_response2 = {
+            one: "E",
+            two: "B",
+            three: "C",
+            four: "D",
+            five: "A"
+        } 
     end 
    
     context "instantiate a valid game" do  
@@ -33,30 +49,28 @@ describe Game do
     end 
 
     context "the Game class records player's response" do 
-        player_response1 = {
-            one: "A",
-            two: "B",
-            three: "C",
-            four: "D",
-            five: "E"
-        } 
-
-        player_response2 = {
-            one: "E",
-            two: "B",
-            three: "C",
-            four: "D",
-            five: "A"
-        } 
-        
         it "records respons1 as player's response" do   
-            @game.player_response(player_response1)
-            expect(@game.show_player_response()).to eq(player_response1)
+            @game.player_response(@player_response1)
+            expect(@game.show_player_response()).to eq(@player_response1)
         end 
 
         it "records respons2 as player's response" do   
-            @game.player_response(player_response2)
-            expect(@game.show_player_response()).to eq(player_response2)
+            @game.player_response(@player_response2)
+            expect(@game.show_player_response()).to eq(@player_response2)
+        end 
+    end 
+
+    context "the player response is not correct" do   
+        it "shows that the player's response is wrong " do   
+            @game.player_response(@player_response2)
+            expect(@game.player_found_answer()).to eq(false)
+        end 
+    end 
+
+    context "the player response is correct" do   
+        it "shows that the player's response is correct" do   
+            @game.player_response(@correct_answer)
+            expect(@game.player_found_answer()).to eq(true)
         end 
     end 
 
