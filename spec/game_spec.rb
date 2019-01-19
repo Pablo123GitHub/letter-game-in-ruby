@@ -35,15 +35,15 @@ describe Game do
             expect(@game).to respond_to(:two)
         end 
 
-        it "responds to two" do  
+        it "responds to three" do  
             expect(@game).to respond_to(:three)
         end 
 
-        it "responds to two" do  
+        it "responds to four" do  
             expect(@game).to respond_to(:four)
         end 
 
-        it "responds to two" do  
+        it "responds to five" do  
             expect(@game).to respond_to(:five)
         end 
     end 
