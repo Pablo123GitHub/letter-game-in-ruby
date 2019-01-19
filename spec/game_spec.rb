@@ -6,7 +6,11 @@ describe Game do
         @game = Game.new({one: "B", two: "A", three: "C", four: "E", five: "F"})
     end 
    
-    context "instantiate a valid game" do   
+    context "instantiate a valid game" do  
+        it "should be an instance of a Game class" do   
+            expect(@game).to be_an_instance_of(Game)
+        end 
+        
         it "responds to one" do   
             expect(@game).to respond_to(:one)
         end 

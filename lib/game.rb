@@ -14,10 +14,4 @@ class Game
         puts "Start the game"
     end
 
-    def one 
-
-    end 
-
-
-
 end 
