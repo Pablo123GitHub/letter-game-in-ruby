@@ -8,10 +8,21 @@ class Game
         @three = data[:three]
         @four = data[:four]
         @five = data[:five]
+        @player_response = data[:player_response]
     end 
 
     def start
         puts "Start the game"
     end
+
+    def player_response(player_response)
+        @player_response = player_response
+    end 
+
+    def show_player_response
+        @player_response 
+    end 
+
+
 
 end 

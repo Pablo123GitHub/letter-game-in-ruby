@@ -32,9 +32,34 @@ describe Game do
         end 
     end 
 
-    it "prompts the player to start the game" do   
-        expect { @game.start() }.to output("Start the game\n").to_stdout  
-      end 
+    context "the Game class records player's response" do 
+        player_response1 = {
+            one: "A",
+            two: "B",
+            three: "C",
+            four: "D",
+            five: "E"
+        } 
+
+        player_response2 = {
+            one: "E",
+            two: "B",
+            three: "C",
+            four: "D",
+            five: "A"
+        } 
+        
+        it "records respons1 as player's response" do   
+            @game.player_response(player_response1)
+            expect(@game.show_player_response()).to eq(player_response1)
+        end 
+
+        it "records respons2 as player's response" do   
+            @game.player_response(player_response2)
+            expect(@game.show_player_response()).to eq(player_response2)
+        end 
+    end 
+
 
 end
 
