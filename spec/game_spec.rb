@@ -49,6 +49,17 @@ describe Game do
     end 
 
     context "the Game class records player's response" do 
+        it "takes player response as a string" do   
+            @game.player_response_as_a_string("absce")
+            expect(@game.show_player_response).to eq({
+                one: "A",
+                two: "B",
+                three: "S",
+                four: "C",
+                five: "E"
+            } )
+        end 
+
         it "records respons1 as player's response" do   
             @game.player_response(@player_response1)
             expect(@game.show_player_response()).to eq(@player_response1)
@@ -60,20 +71,16 @@ describe Game do
         end 
     end 
 
-    context "the player response is not correct" do   
+    context "checking if the player's response is correct or not" do   
         it "shows that the player's response is wrong " do   
             @game.player_response(@player_response2)
             expect(@game.player_found_answer()).to eq(false)
         end 
-    end 
-
-    context "the player response is correct" do   
         it "shows that the player's response is correct" do   
             @game.player_response(@correct_answer)
             expect(@game.player_found_answer()).to eq(true)
         end 
-    end 
-
+    end
 
 end
 
