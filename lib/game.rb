@@ -32,7 +32,7 @@ class Game
     private 
 
     def check_player_input input_string
-        raise "inpust must be exactly 5 letters" if !is_correct_length(input_string.strip)
+        raise "input must be exactly 5 letters" if !is_correct_length(input_string.strip)
         raise "input must be letters only" if !has_correct_format(input_string.strip)
     end 
 
@@ -53,9 +53,8 @@ class Game
         keys = [:one, :two, :three, :four, :five]
         array_keys = input_string.split("")
         array_keys.each_with_index do |el,index|
-            new_hash[keys[index.to_i]] = input_string[index].upcase
+            new_hash[keys[index.to_i]] = input_string[index.to_i].upcase
         end 
         new_hash
-    end 
-
+    end
 end 

@@ -80,7 +80,12 @@ describe Game do
             @game.player_response(@correct_answer)
             expect(@game.player_found_answer()).to eq(true)
         end 
+        it "raises an error about input string length" do   
+            expect { @game.player_response_as_a_string("h")}.to raise_error("input must be exactly 5 letters")
+        end 
+        it "raises an error if input is not String type" do   
+            expect { @game.player_response_as_a_string("h£ur@")}.to raise_error("input must be letters only")
+        end 
     end
-
 end
 
