@@ -4,7 +4,7 @@ class RandomString
         response = ""
         input_number.times do  
             number = Kernel.rand(26) 
-            letter = alphabet[number-1]
+            letter = alphabet[number]
             response = response + letter
         end 
         response 
