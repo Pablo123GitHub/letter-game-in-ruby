@@ -3,23 +3,19 @@ class Game
     attr_reader :one, :two, :three, :four, :five
 
     def initialize(data)
-        @one = data[:one]
-        @two = data[:two]
-        @three = data[:three]
-        @four = data[:four]
-        @five = data[:five]
+        @one = data[0]
+        @two = data[1]
+        @three = data[2]
+        @four = data[3]
+        @five = data[4]
         @player_response = nil
         @correct_response = data
     end
 
     def player_response(player_response)
-        @player_response = player_response
+        check_player_input(player_response)
+        @player_response = player_response.strip
     end 
-
-    def player_response_as_a_string(input_string)
-        check_player_input(input_string)
-        player_response(hashify_string(input_string.strip))
-    end
 
     def show_player_response
         @player_response 
@@ -30,6 +26,11 @@ class Game
     end
 
     private 
+
+    def set_initial_string_as_hash(input_string)
+        check_player_input(input_string)
+        hashify_string(input_string.strip)
+    end 
 
     def check_player_input input_string
         raise "input must be exactly 5 letters" if !is_correct_length(input_string.strip)

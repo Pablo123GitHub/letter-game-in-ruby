@@ -3,7 +3,8 @@ require_relative('../lib/game.rb')
 describe Game do
 
     before(:all) do 
-        @correct_answer = {one: "B", two: "A", three: "C", four: "E", five: "F"}
+        @correct_answer = "BACEF"
+        @wrong_answer = "ABCEF"
         @game = Game.new(@correct_answer)
         @player_response1 = {
             one: "A",
@@ -49,31 +50,20 @@ describe Game do
     end 
 
     context "the Game class records player's response" do 
-        it "takes player response as a string" do   
-            @game.player_response_as_a_string("absce")
-            expect(@game.show_player_response).to eq({
-                one: "A",
-                two: "B",
-                three: "S",
-                four: "C",
-                five: "E"
-            } )
-        end 
-
         it "records respons1 as player's response" do   
-            @game.player_response(@player_response1)
-            expect(@game.show_player_response()).to eq(@player_response1)
+            @game.player_response(@correct_answer)
+            expect(@game.show_player_response()).to eq(@correct_answer)
         end 
 
         it "records respons2 as player's response" do   
-            @game.player_response(@player_response2)
-            expect(@game.show_player_response()).to eq(@player_response2)
+            @game.player_response(@wrong_answer)
+            expect(@game.show_player_response()).to eq(@wrong_answer)
         end 
     end 
 
     context "checking if the player's response is correct or not" do   
         it "shows that the player's response is wrong " do   
-            @game.player_response(@player_response2)
+            @game.player_response(@wrong_answer)
             expect(@game.player_found_answer()).to eq(false)
         end 
         it "shows that the player's response is correct" do   
@@ -81,10 +71,10 @@ describe Game do
             expect(@game.player_found_answer()).to eq(true)
         end 
         it "raises an error about input string length" do   
-            expect { @game.player_response_as_a_string("h")}.to raise_error("input must be exactly 5 letters")
+            expect { @game.player_response("h")}.to raise_error("input must be exactly 5 letters")
         end 
         it "raises an error if input is not String type" do   
-            expect { @game.player_response_as_a_string("h£ur@")}.to raise_error("input must be letters only")
+            expect { @game.player_response("h£ur@")}.to raise_error("input must be letters only")
         end 
     end
 end
