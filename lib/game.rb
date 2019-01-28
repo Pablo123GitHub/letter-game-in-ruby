@@ -1,15 +1,18 @@
+require 'random_string'
+
 class Game 
 
-    attr_reader :one, :two, :three, :four, :five
-
-    def initialize(data)
-        @one = data[0]
-        @two = data[1]
-        @three = data[2]
-        @four = data[3]
-        @five = data[4]
+    def initialize(data = nil)
+        data = data || RandomString.new.show_random_word(5)
         @player_response = nil
-        @correct_response = data.upcase
+        @correct_response = data
+        @response_hash = {
+            0 => data[0],
+            1  => data[1],
+            2  => data[2],
+            3  => data[3],
+            4  => data[4]
+        }
     end
 
     def player_response(player_response)
@@ -25,23 +28,86 @@ class Game
         @player_response.strip == @correct_response.strip
     end
 
-    def assess_response(input_string)
-        assessment = Array.new
-        input_string.each_char.with_index do |char, index|
-            if char != @correct_response[index]
-                if @correct_response.include? char
-                     assessment.push("#{index.to_i + 1 }:correct letter wrong spot")
-                else 
-                assessment.push("#{index.to_i + 1 }:not correct")
-                end 
-            else  
+    # def assess_response_right_or_wrong(input_string)
+    #     array_hash_found = Array.new
+    #     array_not_correct_value = Array.new
+    #     assessment = Array.new
+        
+    #     input_string.each_char.with_index do |char, index|
+    #         if char != @correct_response[index]
+    #             assessment.push("#{index.to_i + 1 }:not correct")
+    #             array_not_correct_value.push(char)
+                
+    #         else  
+    #             assessment.push("#{index.to_i + 1 }:well done!")
+    #             letters_found = Hash.new 
+    #             letters_found[index.to_i] = char
+    #             array_hash_found.push(letters_found)
+                
+    #         end 
+    #     end 
+    #     find_misplaced_letters(assessment, input_string)
+
+    #     assessment.join(", ")
+    # end 
+
+    def assess_response_right_or_wrong (input_string)
+        hash_wrong_values = Hash.new 
+        hash_found_values = Hash.new 
+        array_outstanding_values_to_find = Array.new 
+        assessment = Array.new       
+
+        array_correct_response = @correct_response.split("")
+        array_hashes_user_input = turn_string_into_arr_with_hashes(input_string)
+        
+        array_hashes_user_input.each_with_index do  |hash, index|
+            hash_letter = hash[index]
+            if hash_letter == @response_hash[index]
                 assessment.push("#{index.to_i + 1 }:well done!")
+                hash_found_values[index.to_i] = hash_letter
+            else  
+                assessment.push("#{index.to_i + 1 }:not correct")    
+                array_outstanding_values_to_find.push(hash_letter)
+                hash_wrong_values[index.to_i] = hash_letter
             end 
+        end 
+
+        array_correct_response.each_with_index { |letter, index|
+                if assessment[index].include? "well done"
+                    array_correct_response[index] = nil
+                end 
+             }
+        
+        hash_wrong_values.each do  | key, value|
+          if array_correct_response.include? value
+            assessment[key.to_i] = "#{key.to_i + 1 }:correct letter wrong spot"
+            array_correct_response[key] = nil 
+          end 
         end 
         assessment.join(", ")
     end 
 
     private 
+
+    
+
+    def turn_string_into_arr_with_hashes string_input 
+        arr_correct_value = string_input.split("")
+ 
+        arr_with_hashes = Array.new
+         arr_correct_value.each_with_index do |letter, index| 
+            hash_correct = Hash.new 
+            hash_correct[index.to_i]= letter
+            arr_with_hashes.push(hash_correct)
+        end 
+        arr_with_hashes
+    end 
+
+    def totals(input_array_of_hashes)
+        input_array_of_hashes.reduce({}) do |sums, location|
+      sums.merge(location) { |_, a, b| a + b }
+        end
+    end 
 
     def is_included_but_wrong_spot (char)
         @correct_response.include? char 
@@ -82,7 +148,7 @@ class Game
         turn_string_into_hash(input_string.strip)
     end 
 
-    def turn_string_into_hash input_string
+    def turn_string_into_hash_old input_string
         new_hash = Hash.new()
         keys = [:one, :two, :three, :four, :five]
         array_keys = input_string.split("")
