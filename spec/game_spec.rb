@@ -8,12 +8,7 @@ describe Game do
         @wrong_answer = "ABCEF"
         @game = Game.new(@correct_answer)
     end 
-   
-    context "instantiate a valid game" do  
-        # it "should be an instance of a Game class" do   
-        #     expect(@game).to be_an_instance_of(Game)
-        # end 
-    end 
+
 
     context 'when using the random string generator option' do
         it 'does call the random generator class' do
@@ -51,7 +46,7 @@ describe Game do
             expect { @game.player_response("h£ur@")}.to raise_error("input must be letters only")
         end 
     end
-            context "The game gives information about the players' response" do   
+            context "The game gives information about the player's input" do   
         
             it "tells the player that one letter is correct and at the right position, but all the other ones are wrong" do   
                 @game.player_response("Bstuv")
@@ -82,17 +77,17 @@ describe Game do
             end 
         
             context "edge cases" do   
-                it "tells about ONE correct letter, and 4 not correct ones although all 4 are the same as the correct letter : letter F " do   
+                it "all the letters are the same and one of them is part of the correct response" do   
                     @game.player_response("fffff")
                     player_answer = @game.show_player_response()
                     expect(@game.assess_response_right_or_wrong(player_answer)).to eq("1:not correct, 2:not correct, 3:not correct, 4:not correct, 5:well done!")
                 end 
-                it "tells about all letters being misplaced although correct letters that belong to the response  " do   
+                it "all the letters not placed at the right index but all of them are part of the response" do   
                     @game.player_response("abefc")
                     player_answer = @game.show_player_response()
                     expect(@game.assess_response_right_or_wrong(player_answer)).to eq("1:correct letter wrong spot, 2:correct letter wrong spot, 3:correct letter wrong spot, 4:correct letter wrong spot, 5:correct letter wrong spot")
                 end 
-                it "tells the player that all letters in response are wrong" do   
+                it "all the letters are not in the correct response" do   
                     @game.player_response("rstuv")
                     player_answer = @game.show_player_response()
                     expect(@game.assess_response_right_or_wrong(player_answer)).to eq("1:not correct, 2:not correct, 3:not correct, 4:not correct, 5:not correct")
