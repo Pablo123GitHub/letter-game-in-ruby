@@ -51,24 +51,20 @@ describe Game do
             expect { @game.player_response("h£ur@")}.to raise_error("input must be letters only")
         end 
     end
-    context "The game gives information about the players' response" do   
-        it "tells the player that all letters in response are wrong" do   
-            @game.player_response("rstuv")
-            player_answer = @game.show_player_response()
-            expect(@game.assess_response_right_or_wrong(player_answer)).to eq("1:not correct, 2:not correct, 3:not correct, 4:not correct, 5:not correct")
-        end 
-        it "tells the player that one letter is correct and at the right position, but all the other ones are wrong" do   
-            @game.player_response("Bstuv")
-            player_answer = @game.show_player_response()
-            expect(@game.assess_response_right_or_wrong(player_answer)).to eq("1:well done!, 2:not correct, 3:not correct, 4:not correct, 5:not correct")
-        end 
-        it "tells the player that two letters are correct/correctly placed, the other ones wrong" do   
-            @game.player_response("Bsjdf")
-            player_answer = @game.show_player_response()
-            expect(@game.assess_response_right_or_wrong(player_answer)).to eq("1:well done!, 2:not correct, 3:not correct, 4:not correct, 5:well done!")
-        end 
+            context "The game gives information about the players' response" do   
+        
+            it "tells the player that one letter is correct and at the right position, but all the other ones are wrong" do   
+                @game.player_response("Bstuv")
+                player_answer = @game.show_player_response()
+                expect(@game.assess_response_right_or_wrong(player_answer)).to eq("1:well done!, 2:not correct, 3:not correct, 4:not correct, 5:not correct")
+            end 
+            it "tells the player that two letters are correct/correctly placed, the other ones wrong" do   
+                @game.player_response("Bsjdf")
+                player_answer = @game.show_player_response()
+                expect(@game.assess_response_right_or_wrong(player_answer)).to eq("1:well done!, 2:not correct, 3:not correct, 4:not correct, 5:well done!")
+            end 
 
-        context "tells the player about a letter that is part of the response but at the wrong position" do 
+            context "tells the player about a letter that is part of the response but at the wrong position" do 
             it "tells the player about ONE correct letter at the wrong index" do   
                 @game.player_response("zbuuu") #correct BACEF
                 player_answer = @game.show_player_response()
@@ -83,6 +79,24 @@ describe Game do
                 @game.player_response("zbuff")
                 player_answer = @game.show_player_response()
                 expect(@game.assess_response_right_or_wrong(player_answer)).to eq("1:not correct, 2:correct letter wrong spot, 3:not correct, 4:not correct, 5:well done!")
+            end 
+        
+            context "edge cases" do   
+                it "tells about ONE correct letter, and 4 not correct ones although all 4 are the same as the correct letter : letter F " do   
+                    @game.player_response("fffff")
+                    player_answer = @game.show_player_response()
+                    expect(@game.assess_response_right_or_wrong(player_answer)).to eq("1:not correct, 2:not correct, 3:not correct, 4:not correct, 5:well done!")
+                end 
+                it "tells about all letters being misplaced although correct letters that belong to the response  " do   
+                    @game.player_response("abefc")
+                    player_answer = @game.show_player_response()
+                    expect(@game.assess_response_right_or_wrong(player_answer)).to eq("1:correct letter wrong spot, 2:correct letter wrong spot, 3:correct letter wrong spot, 4:correct letter wrong spot, 5:correct letter wrong spot")
+                end 
+                it "tells the player that all letters in response are wrong" do   
+                    @game.player_response("rstuv")
+                    player_answer = @game.show_player_response()
+                    expect(@game.assess_response_right_or_wrong(player_answer)).to eq("1:not correct, 2:not correct, 3:not correct, 4:not correct, 5:not correct")
+                end 
             end 
         end 
     end 

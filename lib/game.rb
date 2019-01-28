@@ -28,36 +28,11 @@ class Game
         @player_response.strip == @correct_response.strip
     end
 
-    # def assess_response_right_or_wrong(input_string)
-    #     array_hash_found = Array.new
-    #     array_not_correct_value = Array.new
-    #     assessment = Array.new
-        
-    #     input_string.each_char.with_index do |char, index|
-    #         if char != @correct_response[index]
-    #             assessment.push("#{index.to_i + 1 }:not correct")
-    #             array_not_correct_value.push(char)
-                
-    #         else  
-    #             assessment.push("#{index.to_i + 1 }:well done!")
-    #             letters_found = Hash.new 
-    #             letters_found[index.to_i] = char
-    #             array_hash_found.push(letters_found)
-                
-    #         end 
-    #     end 
-    #     find_misplaced_letters(assessment, input_string)
-
-    #     assessment.join(", ")
-    # end 
-
     def assess_response_right_or_wrong (input_string)
         hash_wrong_values = Hash.new 
         hash_found_values = Hash.new 
         array_outstanding_values_to_find = Array.new 
         assessment = Array.new       
-
-        array_correct_response = @correct_response.split("")
         array_hashes_user_input = turn_string_into_arr_with_hashes(input_string)
         
         array_hashes_user_input.each_with_index do  |hash, index|
@@ -71,24 +46,30 @@ class Game
                 hash_wrong_values[index.to_i] = hash_letter
             end 
         end 
+        assessment = find_misplaced_letters(assessment, hash_wrong_values)
 
-        array_correct_response.each_with_index { |letter, index|
-                if assessment[index].include? "well done"
-                    array_correct_response[index] = nil
-                end 
-             }
-        
-        hash_wrong_values.each do  | key, value|
-          if array_correct_response.include? value
-            assessment[key.to_i] = "#{key.to_i + 1 }:correct letter wrong spot"
-            array_correct_response[key] = nil 
-          end 
-        end 
         assessment.join(", ")
     end 
 
     private 
 
+    def find_misplaced_letters(arr_input_assessment, hash_wrong_values)
+        array_correct_response = @correct_response.split("")
+      
+        array_correct_response.each_with_index { |letter, index|
+            if arr_input_assessment[index].include? "well done"
+                array_correct_response[index] = nil
+            end 
+        }
+    
+        hash_wrong_values.each do  | key, value|
+        if array_correct_response.include? value
+            arr_input_assessment[key.to_i] = "#{key.to_i + 1 }:correct letter wrong spot"
+            array_correct_response[array_correct_response.index(value)] = nil 
+        end 
+        end 
+        arr_input_assessment
+    end 
     
 
     def turn_string_into_arr_with_hashes string_input 
