@@ -1,11 +1,13 @@
-require 'random_string'
+require_relative './random_string'
+
+require 'byebug'
 
 class Game 
 
     def initialize(data = nil)
         data = data || RandomString.new.show_random_word(5)
         @player_response = nil
-        @correct_response = data
+        @correct_response = data.upcase
         @response_hash = {
             0 => data[0],
             1  => data[1],
@@ -25,19 +27,18 @@ class Game
     end 
 
     def player_found_answer
-        @player_response.strip == @correct_response.strip
+        @player_response.strip.upcase == @correct_response.strip.upcase
     end
 
-    def assess_response_right_or_wrong (input_string)
+    def assess_response_right_or_wrong ()
         hash_wrong_values = Hash.new 
         hash_found_values = Hash.new 
         array_outstanding_values_to_find = Array.new 
         assessment = Array.new       
-        array_hashes_user_input = turn_string_into_arr_with_hashes(input_string)
-        
+        array_hashes_user_input = turn_string_into_arr_with_hashes(@player_response)
         array_hashes_user_input.each_with_index do  |hash, index|
             hash_letter = hash[index]
-            if hash_letter == @response_hash[index]
+            if hash_letter == @response_hash[index].upcase
                 assessment.push("#{index.to_i + 1 }:well done!")
                 hash_found_values[index.to_i] = hash_letter
             else  
@@ -46,6 +47,7 @@ class Game
                 hash_wrong_values[index.to_i] = hash_letter
             end 
         end 
+      
         assessment = find_misplaced_letters(assessment, hash_wrong_values)
 
         assessment.join(", ")
@@ -55,12 +57,14 @@ class Game
 
     def find_misplaced_letters(arr_input_assessment, hash_wrong_values)
         array_correct_response = @correct_response.split("")
-      
+       
+
         array_correct_response.each_with_index { |letter, index|
             if arr_input_assessment[index].include? "well done"
                 array_correct_response[index] = nil
             end 
         }
+      
     
         hash_wrong_values.each do  | key, value|
         if array_correct_response.include? value
@@ -78,7 +82,7 @@ class Game
         arr_with_hashes = Array.new
          arr_correct_value.each_with_index do |letter, index| 
             hash_correct = Hash.new 
-            hash_correct[index.to_i]= letter
+            hash_correct[index.to_i]= letter.upcase
             arr_with_hashes.push(hash_correct)
         end 
         arr_with_hashes
