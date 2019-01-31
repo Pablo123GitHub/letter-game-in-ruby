@@ -1,10 +1,13 @@
 GEM
+  remote: https://rubygems.org/
   specs:
+    random-word (2.1.1)
 
 PLATFORMS
   ruby
 
 DEPENDENCIES
+  random-word!
 
 BUNDLED WITH
    1.16.0
