@@ -13,7 +13,6 @@ describe Game do
     context 'when using the random string generator option' do
         it 'does call the random generator class' do
             expect(RandomString).to receive(:new).and_call_original
-            
             Game.new
         end
     end
@@ -112,6 +111,17 @@ describe Game do
                 end 
             end 
         end 
+    end 
+
+    context "the player fails to find the answer in less than 10 attempts" do   
+        it "stops the game and shows the answer" do   
+            new_game = Game.new(@correct_answer)
+            9.times do 
+                new_game.player_response(@wrong_answer)
+            end 
+             expect { new_game.player_response(@wrong_answer) }.to output("nope, the correct answer is #{@correct_answer}\n").to_stdout 
+         end 
+
     end 
 end
 

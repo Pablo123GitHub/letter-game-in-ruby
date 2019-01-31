@@ -1,13 +1,12 @@
 require_relative './random_string'
 
-require 'byebug'
 
 class Game 
 
     def initialize(data = nil)
-        data = data || RandomString.new.show_random_string(5)
+        data = data || RandomString.new.random_word
         @player_response = nil
-        @correct_response = data.upcase
+        @correct_response = data.strip.upcase
         @response_hash = {
             0 => data[0],
             1  => data[1],
@@ -15,11 +14,22 @@ class Game
             3  => data[3],
             4  => data[4]
         }
+        @count = 0
     end
 
     def player_response(player_response)
+        @count += 1
         check_player_input(player_response)
         @player_response = player_response.strip.upcase
+
+        if player_failed_to_find_answer
+        puts "nope, the correct answer is #{@correct_response}"
+       end 
+       
+    end 
+
+    def player_failed_to_find_answer
+        @count == 10 
     end 
 
     def show_player_response
