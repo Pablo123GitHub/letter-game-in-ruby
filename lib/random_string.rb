@@ -1,5 +1,5 @@
 class RandomString
-    def show_random_word (input_number)
+    def show_random_string (input_number)
         alphabet = build_alphabet()
         response = ""
         input_number.times do  

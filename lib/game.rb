@@ -5,7 +5,7 @@ require 'byebug'
 class Game 
 
     def initialize(data = nil)
-        data = data || RandomString.new.show_random_word(5)
+        data = data || RandomString.new.show_random_string(5)
         @player_response = nil
         @correct_response = data.upcase
         @response_hash = {
@@ -39,10 +39,10 @@ class Game
         array_hashes_user_input.each_with_index do  |hash, index|
             hash_letter = hash[index]
             if hash_letter == @response_hash[index].upcase
-                assessment.push("#{index.to_i + 1 }:well done!")
+                assessment.push("#{index.to_i + 1 }:WELL DONE!")
                 hash_found_values[index.to_i] = hash_letter
             else  
-                assessment.push("#{index.to_i + 1 }:not correct")    
+                assessment.push("#{index.to_i + 1 }:LETTER NOT IN ANSWER")    
                 array_outstanding_values_to_find.push(hash_letter)
                 hash_wrong_values[index.to_i] = hash_letter
             end 
@@ -60,7 +60,7 @@ class Game
        
 
         array_correct_response.each_with_index { |letter, index|
-            if arr_input_assessment[index].include? "well done"
+            if arr_input_assessment[index].include? "WELL DONE"
                 array_correct_response[index] = nil
             end 
         }

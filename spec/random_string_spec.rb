@@ -6,12 +6,12 @@ describe RandomString do
     context "output a random string with X amount of letters" do   
         it "shows one random letter stubbed as being A" do          
             allow(Kernel).to receive(:rand).and_return(0)
-            expect(subject.show_random_word(1)).to eq("A")
+            expect(subject.show_random_string(1)).to eq("A")
         end 
 
         it "shows two random letters stubbed as being AB" do   
             allow(Kernel).to receive(:rand).and_return(0,1)
-            expect(subject.show_random_word(2)).to eq("AB")
+            expect(subject.show_random_string(2)).to eq("AB")
         end 
     end 
 end 
