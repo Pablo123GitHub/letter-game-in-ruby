@@ -2,7 +2,7 @@
 
 A terminal command game based on a famous French TV show called Motus. Work in progress but the main features are already available. 
 
-![](library/logo.png)
+<img src="library/logo.png" width="150" height="100">
 
 
 ## Built With
