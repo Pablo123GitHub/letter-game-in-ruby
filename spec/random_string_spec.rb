@@ -23,6 +23,12 @@ describe RandomString do
         it "has a String class" do   
             allow(RandomWord).to receive(:nouns).and_call_original
             expect(subject.random_word.class).to eq(String)
+        end
+
+        it "has the correct format" do    
+            allow(RandomWord).to receive(:nouns).and_return("so_la", "oknow")
+            
+            expect(subject.random_word).not_to include("_")
         end 
     end 
 end 
