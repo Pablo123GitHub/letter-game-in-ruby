@@ -1,4 +1,6 @@
 require_relative './random_string'
+require 'byebug'
+# require 'rb-readline'
 
 
 class Game 
@@ -67,8 +69,6 @@ class Game
 
     def find_misplaced_letters(arr_input_assessment, hash_wrong_values)
         array_correct_response = @correct_response.split("")
-       
-
         array_correct_response.each_with_index { |letter, index|
             if arr_input_assessment[index].include? "WELL DONE"
                 array_correct_response[index] = nil
@@ -88,7 +88,6 @@ class Game
 
     def turn_string_into_arr_with_hashes string_input 
         arr_correct_value = string_input.split("")
- 
         arr_with_hashes = Array.new
          arr_correct_value.each_with_index do |letter, index| 
             hash_correct = Hash.new 
@@ -122,8 +121,11 @@ class Game
     end 
 
     def check_player_input input_string
-        raise "input must be exactly 5 letters" if !is_correct_length(input_string.strip)
-        raise "input must be letters only" if !has_correct_format(input_string.strip)
+        if !is_correct_length(input_string.strip)  
+            puts  "input must be exactly 5 letters"
+        elsif !has_correct_format(input_string.strip)
+            puts "input must be letters only"
+        end 
     end 
 
     def is_correct_length input_string

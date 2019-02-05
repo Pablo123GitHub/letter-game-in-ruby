@@ -29,6 +29,20 @@ describe Game do
         end 
     end 
 
+    context "detects wrong format player input, output error, but player can play on" do    
+        it "raises an error about input string length" do   
+            expect { @game.player_response("h")}.to output("input must be exactly 5 letters\n").to_stdout
+        end 
+        it "raises an error if input is not String type" do   
+            expect { @game.player_response("h£ur@")}.to output("input must be letters only\n").to_stdout
+        end 
+
+        xit "allows the player to play on even once input format is wrong" do   
+            expect { @game.player_response("h£ur@") }.to output("Input your response: \n").to_stdout 
+            expect(@game.show_player_response).to eq(nil)
+        end  
+    end 
+
     context "checking if the player's response is correct or not" do   
         it "shows that the player's response is wrong " do   
             @game.player_response(@wrong_answer)
@@ -46,12 +60,6 @@ describe Game do
         it "correct response is given in mixed cases" do   
             @game.player_response(@correct_answer)
             expect(@game.player_found_answer).to eq true
-        end 
-        it "raises an error about input string length" do   
-            expect { @game.player_response("h")}.to raise_error("input must be exactly 5 letters")
-        end 
-        it "raises an error if input is not String type" do   
-            expect { @game.player_response("h£ur@")}.to raise_error("input must be letters only")
         end 
     end
             context "The game gives information about the player's input" do   
@@ -121,7 +129,7 @@ describe Game do
             end 
              expect { new_game.player_response(@wrong_answer) }.to output("nope, the correct answer is #{@correct_answer}\n").to_stdout 
          end 
-
     end 
+
 end
 
