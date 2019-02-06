@@ -50,14 +50,16 @@ class Game
         array_hashes_user_input = turn_string_into_arr_with_hashes(@player_response)
         array_hashes_user_input.each_with_index do  |hash, index|
             hash_letter = hash[index]
-            if hash_letter == @response_hash[index].upcase
-                assessment.push("#{index.to_i + 1 }:WELL DONE!")
-                hash_found_values[index.to_i] = hash_letter
-            else  
-                assessment.push("#{index.to_i + 1 }:LETTER NOT IN ANSWER")    
-                array_outstanding_values_to_find.push(hash_letter)
-                hash_wrong_values[index.to_i] = hash_letter
-            end 
+            if !@response_hash[index].nil?
+                if hash_letter == @response_hash[index].upcase
+                    assessment.push("#{index.to_i + 1 }:WELL DONE!")
+                    hash_found_values[index.to_i] = hash_letter
+                else  
+                    assessment.push("#{index.to_i + 1 }:LETTER NOT IN ANSWER")    
+                    array_outstanding_values_to_find.push(hash_letter)
+                    hash_wrong_values[index.to_i] = hash_letter
+                end 
+            end  
         end 
       
         assessment = find_misplaced_letters(assessment, hash_wrong_values)

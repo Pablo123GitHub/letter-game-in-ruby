@@ -36,11 +36,6 @@ describe Game do
         it "raises an error if input is not String type" do   
             expect { @game.player_response("h£ur@")}.to output("input must be letters only\n").to_stdout
         end 
-
-        xit "allows the player to play on even once input format is wrong" do   
-            expect { @game.player_response("h£ur@") }.to output("Input your response: \n").to_stdout 
-            expect(@game.show_player_response).to eq(nil)
-        end  
     end 
 
     context "checking if the player's response is correct or not" do   
