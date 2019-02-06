@@ -26,7 +26,7 @@ class Game
 
         if player_failed_to_find_answer
         puts "nope, the correct answer is #{@correct_response}"
-       end 
+        end 
        
     end 
 
@@ -72,8 +72,10 @@ class Game
     def find_misplaced_letters(arr_input_assessment, hash_wrong_values)
         array_correct_response = @correct_response.split("")
         array_correct_response.each_with_index { |letter, index|
-            if arr_input_assessment[index].include? "WELL DONE"
-                array_correct_response[index] = nil
+            if !arr_input_assessment[index].nil?
+                if arr_input_assessment[index].include? "WELL DONE"
+                    array_correct_response[index] = nil
+                end 
             end 
         }
       
